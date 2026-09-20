@@ -1,0 +1,36 @@
+# Example configuration for tools/check_no_leaks.py
+#
+# Copy this file to `.leaks.local` in the repository root and replace the
+# placeholder lines with the identifiers that must not appear.
+#
+# `.leaks.local` is untracked (see .gitignore section 1).  That is the point:
+# the real list never enters the repository, so the scanner does not leak the
+# identifier it is protecting.  This example file is tracked and therefore
+# carries placeholders only.
+#
+# The scanner fails closed -- exit 2 -- if `.leaks.local` is missing.  That is
+# deliberate.  A scan that reports success while unconfigured manufactures
+# confidence rather than providing it.
+#
+# Format: two sections, one entry per line, blank lines and # comments ignored.
+# Matching is case-insensitive, so one entry covers every casing.
+
+[content]
+# Strings that must not appear in any tracked file's text.
+# Example placeholder -- replace with a real identifier.
+REPLACE-WITH-A-FORBIDDEN-STRING
+
+[path]
+# Filename fragments that must not appear in any tracked path.
+# Example placeholder -- replace with a real one.
+REPLACE-WITH-A-FORBIDDEN-FILENAME-FRAGMENT
+
+# Note on the trade-off in .gitignore section 2:
+#
+# A pattern written directly into .gitignore fires on every `git add`, with no
+# dependency on anyone remembering to run a scanner.  Moving the name check
+# into this file gives that up in exchange for not printing the identifier in
+# a tracked pattern.
+#
+# Whichever way you resolve it, resolve it once and write the reason down.  A
+# half-enforced rule is read as enforced.

@@ -1,0 +1,139 @@
+# ---------------------------------------------------------------------------
+# .gitignore — triad-audit
+#
+# Two jobs, and they are different jobs:
+#
+#   1. THIS FILE excludes things by PATH and NAME.
+#   2. tools/check_no_leaks.py excludes things by CONTENT.
+#
+# A .gitignore pattern cannot see inside a file.  It cannot tell that a
+# perfectly ordinary filename contains a forbidden identifier in its text.
+# So this file is not the content guard, and it is not the primary guard for
+# identifier-shaped filenames either -- see the note in section 2.
+# Run the scanner.  Both exist because either alone is a false sense of
+# safety.
+# ---------------------------------------------------------------------------
+
+# ---------------------------------------------------------------------------
+# 1. Local-only configuration
+#
+# .leaks.local holds the actual identifier list the scanner uses.  It is
+# untracked on purpose: an enforcement mechanism that spells out the
+# identifier it protects has leaked it.  A pattern like "*<token>*" written
+# here would publish the token just as surely as prose would.
+# ---------------------------------------------------------------------------
+.leaks.local
+*.local
+
+# ---------------------------------------------------------------------------
+# 2. Enforcement by name
+#
+# Deliberately EMPTY of literal tokens.  Whatever the audited stack is called,
+# that string does not appear in this repository -- not in a pattern, not in
+# a comment, not in a docstring explaining the rule.  The name-level check
+# therefore lives in the [path] section of .leaks.local, and is applied by
+# tools/check_no_leaks.py before a commit.
+#
+# This is a real trade: a .gitignore pattern fires even if the scanner is
+# never run, whereas this arrangement depends on the scanner being run.  It
+# is worth it, because a guard that leaks the secret it guards is not a guard.
+# ---------------------------------------------------------------------------
+
+# ---------------------------------------------------------------------------
+# 3. Withheld artifacts (Appendix A of the manuscript)
+#
+# Appendix A publishes these two artifacts BY SIZE AND DIGEST ONLY:
+#
+#   frozen scoring stack (serialised)      212717 B   2db0c9f622f79fb0
+#   branch structure and response surface    12.2 KB   6f7449ec02af1f19
+#
+# "Withheld means not published; it does not mean that no such file exists."
+#
+# Unlike section 2, these name patterns leak nothing: the artifact names are
+# already published in the manuscript.  They are excluded by name fragment
+# AND by serialisation type, because the exact filenames are not part of the
+# published record.
+# ---------------------------------------------------------------------------
+frozen_stack*
+*frozen*scoring*
+*scoring*stack*
+response_surface*
+branch_structure*
+*.pkl
+*.pickle
+*.joblib
+*.pt
+*.pth
+*.ckpt
+*.safetensors
+*.onnx
+*.npz
+*.npy
+*.h5
+*.hdf5
+*.parquet
+*.feather
+
+# ---------------------------------------------------------------------------
+# 4. Raw workspace material
+#
+# The audit ran over a working tree containing inputs, outputs and logs from
+# the audited pipeline.  Those are not part of this repository: they are the
+# material the audit was performed ON, and shipping them would publish the
+# thing the paper only describes.
+# ---------------------------------------------------------------------------
+raw/
+raw_*
+workspace/
+_pod_fetch*/
+artifacts/
+data/raw/
+inputs/
+outputs/
+logs/
+*.jsonl
+*.log
+
+# ---------------------------------------------------------------------------
+# 5. Scratch and probe scripts
+#
+# Probe scripts are how a claim was checked, not what is being released.
+# They stay in the working tree, never committed; released tooling lives
+# under tools/ and is written to stand on its own.
+# ---------------------------------------------------------------------------
+_scratch/
+_*.py
+_probe_*
+_tmp*
+scratch/
+
+# ---------------------------------------------------------------------------
+# 6. Build residue
+# ---------------------------------------------------------------------------
+*.aux
+*.bbl
+*.blg
+*.out
+*.toc
+*.synctex.gz
+*.fls
+*.fdb_latexmk
+build/
+dist/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ipynb_checkpoints/
+
+# ---------------------------------------------------------------------------
+# 7. Machine-specific
+# ---------------------------------------------------------------------------
+.env
+.env.*
+.DS_Store
+Thumbs.db
+desktop.ini
+.venv/
+venv/
+.idea/
+.vscode/

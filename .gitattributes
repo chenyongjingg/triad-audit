@@ -1,0 +1,18 @@
+# Normalise line endings on commit.
+#
+# This repository is authored on Windows and will most likely be cloned on
+# Linux.  Without this, every file shows as modified on the first clone from
+# the other platform, which buries real changes in noise -- and a diff nobody
+# reads is how a leak survives review.
+* text=auto eol=lf
+
+# Binary types: never touch, never diff.
+*.pdf binary
+*.png binary
+*.jpg binary
+*.zip binary
+*.gz binary
+
+# Generated files: exclude from diffs and from language statistics.
+CITATION.cff linguist-generated=false
+*.csv linguist-detectable=true

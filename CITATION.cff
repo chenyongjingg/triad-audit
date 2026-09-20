@@ -1,0 +1,46 @@
+cff-version: 1.2.0
+message: "If you use the TRIAD checklist or the audit procedure, please cite the manuscript below."
+title: "triad-audit: a three-layer response integrity audit for deployability"
+type: software
+license: MIT
+repository-code: "https://github.com/chenyongjingg/triad-audit"
+abstract: >-
+  The audit checklist and the six-step procedure from the manuscript
+  "Auditing the Deployability Boundary: Is a Guardrail's Reported Operating
+  Point Produced by the Evaluation Apparatus?".  TRIAD is an audit
+  procedure, not a detector: it reports whether a guardrail's reported
+  operating point is produced by the evaluation apparatus rather than by the
+  guardrail. This is a scaffold release -- the checklist, the procedure and
+  the recorded numbers are transcribed from the manuscript; the code that
+  produced them is not yet released.
+keywords:
+  - audit
+  - evaluation validity
+  - guardrail evaluation
+  - reproducibility
+  - measurement
+authors:
+  - family-names: Chen
+    given-names: Yongjin
+    affiliation: "People's Public Security University of China, Beijing, China"
+  - family-names: Xue
+    given-names: Ziying
+    affiliation: "School of Investigation, People's Public Security University of China, Beijing, China"
+  - family-names: Zhu
+    given-names: Songze
+    affiliation: "People's Public Security University of China, Beijing, China"
+    email: "20196846@ppsuc.edu.cn"
+version: "0.1.0-scaffold"
+date-released: "2026-09-17"
+preferred-citation:
+  type: article
+  title: "Auditing the Deployability Boundary: Is a Guardrail's Reported Operating Point Produced by the Evaluation Apparatus?"
+  authors:
+    - family-names: Chen
+      given-names: Yongjin
+    - family-names: Xue
+      given-names: Ziying
+    - family-names: Zhu
+      given-names: Songze
+  year: 2026
+  notes: "Manuscript not yet published."
