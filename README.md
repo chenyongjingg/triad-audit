@@ -34,12 +34,12 @@ Seven checks, transcribed from Table 3 of the manuscript. The middle pair is the
 
 | L | Audit question | Conventional check (anchor dimension) | Blind dimension | Instance in this work | Prescription |
 |---|---|---|---|---|---|
-| I | Does a component actually change the output? | structural reading: the component exists and its feature specification is non-empty (**existence**) | *activity of the input*: existing is not the same as varying | a branch declares zero features and still occupies a slot; a fixed quantity zeroes two of three terms | run a finite difference ∂ŷ/∂(branch input) per component; never substitute "the component is present" |
-| I | the same | finite differences under a per-branch perturbation (**unit-level**) | *the evaluation path*: the perturbation must propagate through the arguments the evaluation actually passes | no call site passes the audio input, so all nine acoustic features fill with a constant | apply the perturbation **at the evaluation entry point**; a unit test with complete arguments does not substitute |
+| I | Does a component actually change the output? | structural reading: the component exists and its feature specification is non-empty (**existence**) | *activity of the input*: existing is not the same as varying | a branch declares zero features and still occupies a slot; a declared feature resolves to a zero fill | run a finite difference ∂ŷ/∂(branch input) per component; never substitute "the component is present" |
+| I | the same | finite differences under a per-branch perturbation (**unit-level**) | *the evaluation path*: the perturbation must propagate through the arguments the evaluation actually passes, and must reach a channel the fitted component splits on | no call site passes the audio input; eight of the nine keys fill from an empty vector, and the fitted component splits on the ninth alone | apply the perturbation **at the evaluation entry point**, then read the fitted component's split columns: a perturbation that cannot reach a live split cannot change the output |
 | II | Does the boundary characterise the threat or the audited object? | reproduce across configurations and see whether the boundary moves (**configuration**) | *single-variable*: two factors moved at once cannot be attributed | a 2×2 over model and calibration prior; one pair changes only the prior | flip one factor at a time and **report the quantities held fixed** (here: the fixed-threshold reading is identical to the digit) |
 | II | the same | order perturbation: replay under different arrival orders (**order**) | *composition of the denominator*: a pooled rate is not comparable across different segment mixes | a framed share of 69.6% against 48.6% inflates a pooled ratio | normalise within segment for any cross-pool comparison, and report the composition and the dropped counts alongside |
-| III | Do the counts correspond to distinct content? | threshold-style completeness: whether the count meets its target (**count**) | *content and de-duplication*: meeting the row target is not the same as distinct texts | 300 rows are 30 texts repeated ten times, so held-out text overlap is 28/28 | everywhere a set is declared, report the row count **and** the distinct-text count as two separate numbers |
-| III | Where did the difference go? | reconciliation of declared against evaluated counts (**count**) | *trace of the discarding action*: a silent `continue` leaves no trace | 1050 → 560 (loss 490); 2800 → 2607 (loss 193) | every silent discard path (`continue`, `except: return`, an `if` guard on a field) must leave a trace with a reason and a count |
+| III | Do the counts correspond to distinct content? | threshold-style completeness: whether the count meets its target (**count**) | *content and de-duplication*: meeting the row target is not the same as distinct texts | 300 rows are 30 texts repeated ten times, so held-out text overlap is 28/28 | everywhere a set is declared, report the row count **and** the distinct-content count as two separate numbers |
+| III | Where did the difference go? | reconciliation of declared against evaluated counts (**count**) | *trace of the discarding action*: a silent `continue` leaves no trace | 1050 → 560 (loss 490); 2800 → 2607 (loss 193); 300 → 236 (loss 64) | every silent discard path (`continue`, `except: return`, an `if` guard on a field) must leave a trace with a reason and a count |
 | III | Has a known fact taken effect? | recording: whether the structural fact was written into an artifact or a comment (**record**) | *propagation into the invariant*: recorded is not the same as used to constrain the design | a tenfold repetition structure was recorded twice and never reached the held-out construction | a recorded fact must be bound to the invariant it constrains; a note in the margin is not in effect |
 
 A machine-readable copy is at [`checklist/checklist.csv`](checklist/checklist.csv).
@@ -48,7 +48,9 @@ A machine-readable copy is at [`checklist/checklist.csv`](checklist/checklist.cs
 
 ## How to run it
 
-The checklist is executable in six steps — three about collecting numbers, three about interrogating them.
+The checklist is executable in eight steps — three about collecting numbers, three about interrogating them, and two about the instruments themselves.
+
+The steps are ordered by instrument, not by the table's row order: rows 1 and 2 map to step 7; row 3 to step 6; row 4 to step 8; row 5 to step 4; row 6 to steps 1–3; row 7 to step 5. Step 4 is a heuristic generalising row 5's count check rather than its instrument.
 
 1. **Enumerate the declared quantities.** List every declared count at every stage boundary: artifact fields, log lines, progress-bar totals.
 2. **For each, obtain the evaluated quantity.** Not the number written in the artifact, but the number of rows that actually enter the next stage's computation. A mismatch is a candidate defect.
@@ -57,6 +59,10 @@ The checklist is executable in six steps — three about collecting numbers, thr
 4. **For each threshold-style check, ask what its blind dimension is.** If the check asks whether there are enough rows, change to an orthogonal dimension: content (distinct texts), stratification (per-subgroup denominators), or composition (segment mix). If the result is unchanged under the new dimension, that dimension is not the defect surface; if it changes, the check passed on its anchor and is blind on the dimension that moved.
 5. **For each known fact, ask whether it is bound to an invariant.** Count its appearances in artifacts, comments and notes, then look for its use in the construction code. Recorded and unused is equivalent to undiscovered.
 6. **For each quantity held fixed, ask whether the comparison is single-variable.** List every factor that was constant; if two or more moved, the comparison cannot be attributed. Report the fixed quantities, because their being fixed is what licenses the attribution.
+7. **Ask whether each declared component changes the output at all.** Run a finite difference **at the evaluation entry point**, not at the unit boundary. A bit-identical before/after is evidence of no influence on the probed path; a component that never receives an input cannot be probed at all, and the constant it is fed is itself the finding.
+8. **Replay the stream under a different order.** Report the movement against the **order-to-order spread**, not against zero, and state the update set: the check is informative only where the stateful component updates on a strict subset of the stream. With a full-stream update the regime spread collapses to the update set's own.
+
+The freeze discipline of Section 3.1 governs every step: while the procedure runs, no weight, hyper-parameter, calibrator, threshold or train/test split of the audited stack changes, so a step that cannot be executed without changing one is reported as a finding rather than performed.
 
 ---
 
@@ -69,13 +75,13 @@ These are the audit's findings on the case study. They are reproduced here as a 
 | In-segment FPR movement when the calibrator's initial quantile is flipped | 1.48× → 4.65× |
 | Fixed-threshold reading under the same flip | bit-identical |
 | In-segment FPR movement when the evaluated model is changed | 3.52× |
-| Fixed-threshold reading under the same change | 3.3% |
+| Fixed-threshold reading under the same change | 9.3% framed; pooled 3.3% |
 | Fresh out-of-sample benign corpus — online calibration | 0.0 |
 | Fresh out-of-sample benign corpus — fixed threshold | 0.5805 |
 | Decisions reproduced by a single length cut | 94.49%, over a plateau of cut values |
 | Input channels with identically zero finite differences at the probed base point | three |
 | Threshold-crossing length, punctuation density varied | 934 → 1137 characters |
-| Accounting losses reconstructed from artifacts | 490 rows, 193 rows, and a 28/28 content overlap |
+| Accounting losses reconstructed from artifacts | 490 rows, 193 rows and 64 rows; a 28/28 content overlap |
 
 ---
 

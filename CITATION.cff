@@ -5,7 +5,7 @@ type: software
 license: MIT
 repository-code: "https://github.com/chenyongjingg/triad-audit"
 abstract: >-
-  The audit checklist and the six-step procedure from the manuscript
+  The audit checklist and the eight-step procedure from the manuscript
   "An Empirical Audit of an AI System's Evaluation Pipeline: A Deployed
   Guardrail's Reported Operating Point Is Produced by the Measurement
   Apparatus".  TRIAD is an audit

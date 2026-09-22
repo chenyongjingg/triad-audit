@@ -8,7 +8,7 @@ Everything below follows from those two commitments.
 
 | | Category | Contents | Rule |
 |---|---|---|---|
-| ① | **Published here** | the seven-item checklist, the six-step procedure, the verdict definitions, the numbers as transcribed from the manuscript, the scope and withheld-artifact records | free to read and reuse under the MIT license |
+| ① | **Published here** | the seven-item checklist, the eight-step procedure, the verdict definitions, the numbers as transcribed from the manuscript, the scope and withheld-artifact records | free to read and reuse under the MIT license |
 | ② | **Recorded, not published** | the two Appendix A artifacts: frozen scoring stack (`212717 B`, `2db0c9f622f79fb0`); branch structure and response surface (`12.2 KB`, `6f7449ec02af1f19`) | published by size and digest only; see [`withheld-artifacts.md`](withheld-artifacts.md) |
 | ③ | **Never in this repository** | the audited stack's real name and its internal identifiers; raw workspace inputs, outputs and logs from the audited pipeline | excluded mechanically — see below |
 
