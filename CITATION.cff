@@ -6,8 +6,9 @@ license: MIT
 repository-code: "https://github.com/chenyongjingg/triad-audit"
 abstract: >-
   The audit checklist and the six-step procedure from the manuscript
-  "Auditing the Deployability Boundary: Is a Guardrail's Reported Operating
-  Point Produced by the Evaluation Apparatus?".  TRIAD is an audit
+  "An Empirical Audit of an AI System's Evaluation Pipeline: A Deployed
+  Guardrail's Reported Operating Point Is Produced by the Measurement
+  Apparatus".  TRIAD is an audit
   procedure, not a detector: it reports whether a guardrail's reported
   operating point is produced by the evaluation apparatus rather than by the
   guardrail. This is a scaffold release -- the checklist, the procedure and
@@ -34,7 +35,7 @@ version: "0.1.0-scaffold"
 date-released: "2026-09-17"
 preferred-citation:
   type: article
-  title: "Auditing the Deployability Boundary: Is a Guardrail's Reported Operating Point Produced by the Evaluation Apparatus?"
+  title: "An Empirical Audit of an AI System's Evaluation Pipeline: A Deployed Guardrail's Reported Operating Point Is Produced by the Measurement Apparatus"
   authors:
     - family-names: Chen
       given-names: Yongjin

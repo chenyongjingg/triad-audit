@@ -2,7 +2,7 @@
 
 **TRIAD** — a three-layer *Response Integrity Audit for Deployability*: a procedure for asking whether a guardrail's reported operating point is produced by the evaluation apparatus rather than by the guardrail.
 
-This repository accompanies the manuscript *Auditing the Deployability Boundary: Is a Guardrail's Reported Operating Point Produced by the Evaluation Apparatus?* It holds the audit checklist and the procedure in a form that can be run on a pipeline other than the one audited in the paper.
+This repository accompanies the manuscript *An Empirical Audit of an AI System's Evaluation Pipeline: A Deployed Guardrail's Reported Operating Point Is Produced by the Measurement Apparatus*. It holds the audit checklist and the procedure in a form that can be run on a pipeline other than the one audited in the paper.
 
 > **Status: scaffold only.** The checklist, the procedure and the recorded numbers below are transcribed from the manuscript. The executable code that produced them is **not yet released** — see [What is not here](#what-is-not-here). Nothing in this repository runs yet.
 
@@ -30,7 +30,7 @@ Each check returns one of three verdicts:
 
 ## The checklist
 
-Seven checks, transcribed from Table 2 of the manuscript. The middle pair is the content: **what a check anchors on** and **what it cannot see**.
+Seven checks, transcribed from Table 3 of the manuscript. The middle pair is the content: **what a check anchors on** and **what it cannot see**.
 
 | L | Audit question | Conventional check (anchor dimension) | Blind dimension | Instance in this work | Prescription |
 |---|---|---|---|---|---|

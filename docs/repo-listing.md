@@ -72,7 +72,7 @@ A note on ordering: these are entered in priority order, because a platform that
 
 ## Other one-line uses
 
-**Companion-paper footnote, or the "Code availability" line of a resubmission:**
+**Companion-paper footnote, or the "Code availability" line of a manuscript:**
 
 ```
 The TRIAD checklist and procedure are available at https://github.com/chenyongjingg/triad-audit.
